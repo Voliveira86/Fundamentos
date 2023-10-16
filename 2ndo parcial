@@ -1,0 +1,24 @@
+#include <iostream>
+#include "math.h"
+using namespace std;
+float CalcP(float p,float a,float b,float c);
+int main ()
+{
+    float p,a,b,c,resultado;
+    cout<<"ingrese el lado a, b y c del triangulo: ";
+    cin>>a;
+    cin>>b;
+    cin>>c;
+    resultado=CalcP(p,a,b,c);
+    cout<<"El resultado es: "<<resultado;
+    return 0;
+}
+float CalcP(float p,float a,float b,float c)
+{
+  
+    float s;
+    
+    s=(a+b+c)/2;
+    p=sqrt(s*(s-a)*(s-b)*(s-c));
+    return p;
+}
