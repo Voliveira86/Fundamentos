@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Máximo número de usuarios
+const int MAX_USUARIOS = 100;
+
+// Clase para representar a los usuarios
+class Usuario {
+public:
+  string nombre;
+  string tipo; // "Cliente" o "Reparador"
+  // Otros datos relevantes
+
+  Usuario(string n, string t) : nombre(n), tipo(t) {}
+};
+
+// Función para mostrar la lista de usuarios
+void mostrarListaUsuarios(const Usuario usuarios[], int numUsuarios) {
+  cout << "Lista de Usuarios:\n";
+  for (int i = 0; i < numUsuarios; ++i) {
+    cout << "Nombre: " << usuarios[i].nombre << " | Tipo: " << usuarios[i].tipo << "\n";
+  }
+}
+
+// Función para buscar al usuario en el array
+int buscarUsuario(const Usuario usuarios[], int numUsuarios, const string& nombreUsuario) {
+  for (int i = 0; i < numUsuarios; ++i) {
+    if (usuarios[i].nombre == nombreUsuario) {
+      return i; // Índice del usuario encontrado
+    }
+  }
+  return -1; // Usuario no encontrado
+}
+
+void actualizarPerfilReparaciones(Usuario usuarios[], int& numUsuarios) {
+  // Mostrar la lista de usuarios
+  mostrarListaUsuarios(usuarios, numUsuarios);
+
+  // Solicitar al usuario que ingrese el nombre del usuario cuyo perfil desea actualizar
+  cout << "Ingrese el nombre del usuario cuyo perfil desea actualizar: ";
+  string nombreUsuario;
+  cin >> nombreUsuario;
+
+  // Buscar al usuario en el array
+  int indiceUsuario = buscarUsuario(usuarios, numUsuarios, nombreUsuario);
+
+  // Si se encuentra el usuario, permitir actualizar su perfil
+  if (indiceUsuario != -1) {
+    cout << "Usuario encontrado. Puede modificar los datos de reparaciones aquí.\n";
+
+    // Agregar la lógica específica de actualización de perfil
+    // usuarios[indiceUsuario].tipo, usuarios[indiceUsuario].nombre son los datos del usuario encontrado
+  } else {
+    cout << "Usuario no encontrado. Verifique el nombre e intente nuevamente.\n";
+  }
+}
+
