@@ -1,0 +1,27 @@
+void actualizarPerfilReparaciones(Usuario usuarios[], int& numUsuarios) {
+    mostrarListaUsuarios(usuarios, numUsuarios);
+
+    cout << "Ingrese el nombre del usuario cuyo perfil desea actualizar: ";
+    string nombreUsuario;
+    cin >> nombreUsuario;
+    cout<<"Ingrese la nueva direccion"
+    cin.ignore();
+    getline(cin,usuarios[indiceUsuario].direccion);
+   
+
+    int indiceUsuario = buscarUsuario(usuarios, numUsuarios, nombreUsuario);
+
+    if (indiceUsuario != -1) {
+        cout << "Usuario encontrado. Puede modificar los datos de reparaciones aquí.\n";
+
+        // Lógica específica de actualización de perfil
+        cout << "Nuevo tipo para el usuario " << usuarios[indiceUsuario].nombre << ": ";
+        cin >> usuarios[indiceUsuario].tipo;
+
+        cout << "Datos actualizados:\n";
+        cout << "Nombre: " << usuarios[indiceUsuario].nombre << " | Tipo: " << usuarios[indiceUsuario].tipo << "\n";
+    } else {
+        cout << "Usuario no encontrado. Verifique el nombre e intente nuevamente.\n";
+    }
+}
+
