@@ -1,0 +1,28 @@
+#include <iostream>
+
+using namespace std;
+
+// Función para generar la secuencia: 1, 1, 2, 4, 8, 16, 32, 28, 38, 49, ...
+int generarSecuencia(int n) {
+    if (n <= 2) {
+        return 1;
+    } else if (n == 7) {
+        return 32;
+    } else if (n >= 3 && n <= 6) {
+        // Secuencia creciente (1, 1, 2, 4, 8, 16)
+        return 1 << (n - 3);
+    } else {
+        // Secuencia decreciente (32, 28, 38, 49, ...)
+        return generarSecuencia(n - 1) + generarSecuencia(n - 2) - generarSecuencia(n - 3);
+    }
+}
+
+int main() {
+    // Imprimir los primeros 10 términos de la secuencia
+    cout << "Secuencia: ";
+    for (int i = 1; i <= 10; ++i) {
+        cout << generarSecuencia(i) << " ";
+    }
+
+    return 0;
+}
