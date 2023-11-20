@@ -1,0 +1,672 @@
+1.
+/*Construir una función POTEN(y, y), para calcular la potencia x y de dos números reales cualesquiera.*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float POTEN(float x, float y);
+
+int main()
+{
+    float x,y,Resultado;
+    
+    cout<<"Ingresar la base : ";
+    cin>>x;
+    cout<<"Ingresar la potencia: ";
+    cin>>y;
+    Resultado=POTEN(x,y);
+    
+    cout<<"El resultado de la operación es: "<<Resultado;
+    
+    return 0;
+}
+
+float POTEN(float x, float y)
+{
+    float potencia;
+    
+    potencia=pow(x,y);
+    
+    return potencia;
+}
+
+2.
+/*Construir una función FAC(n) para calcular el factorial de un entero.*/
+
+#include <iostream>
+
+using namespace std;
+
+float FACT(float n);
+
+int main()
+{
+    float n,Resultado,numero;
+    
+    cout<<"Ingresar el número a calcular el factorial : ";
+    cin>>n;
+    numero=n;
+    
+    Resultado=FACT(n);
+    
+    cout<<"El factorial del número "<<numero<<" es: "<<Resultado;
+    
+    return 0;
+}
+
+float FACT(float n)
+{
+    float fact=1;
+    
+    for(int i=1;i<=n;i++)
+    {
+        fact=fact*i;
+    }
+    
+    return fact;
+}
+
+3.
+/*Construir un programa, que mediante funciones, para hallar la suma de la siguiente serie, dados X y N enteros positivos*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float SERIE(float x, float n);
+
+int main()
+{
+    float x,n,Resultado;
+    
+    cout<<"Ingresar el dividendo: ";
+    cin>>x;
+    cout<<"Ingresar el divisor/exponente del número: ";
+    cin>>n;
+    
+    Resultado=SERIE(x,n);
+    
+    cout<<"El resultado de la operación es: "<<Resultado;
+    
+    return 0;
+}
+
+float SERIE(float x, float n)
+{
+    float fact=1,serie=0;
+    
+    for(int i=1;i<=n;i++)
+    {
+        fact=fact*i;
+        serie=serie+(pow(x,i))/fact;
+    }
+    return serie;
+}
+
+4.
+/*Construir un programa, que mediante funciones, halle la suma de la siguiente serie, dados X y N enteros positivos:*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float SERIE(float x, float n);
+
+int main()
+{
+    float x,n,Resultado;
+    
+    cout<<"Ingresar el dividendo: ";
+    cin>>x;
+    cout<<"Ingresar el divisor/exponente del número: ";
+    cin>>n;
+    
+    Resultado=SERIE(x,n);
+    
+    cout<<"El resultado de la operación es: "<<Resultado;
+    
+    return 0;
+}
+
+float SERIE(float x, float n)
+{
+    float fact=1,serie=0;
+    
+    for(int i=1;i<=n;i++)
+    {
+        fact=fact*i;
+        serie=serie+(pow(-1,i-1)*pow(x,i))/fact;
+    }
+    return serie;
+}
+
+5.
+#include <iostream>
+
+using namespace std;
+
+//Agustin Parada-Emiliano Ribera
+
+void sistema(int a,int b,int c,int d,int e,int f, int &x, int &y);
+
+int main()
+{
+    int a,b,c,d,e,f,x,y;
+    cout<<"Ingrese el dato de a: ";
+    cin>>a;
+    cout<<"Ingrese el dato de b: ";
+    cin>>b;
+    cout<<"Ingrese el dato de c: ";
+    cin>>c;
+    cout<<"Ingrese el dato de d: ";
+    cin>>d;
+    cout<<"Ingrese el dato de e: ";
+    cin>>e;
+    cout<<"Ingrese el dato de f: ";
+    cin>>f;
+    sistema(a,b,c,d,e,f,x,y);
+    cout<<"El resultado de X es de: "<<endl<<x<<endl<<"El resultado de Y es de: "<<endl<<y;
+    return 0;
+}
+
+void sistema(int a,int b,int c,int d,int e,int f, int &x, int &y)
+{
+    y=(a*f-c*d)/(e*a-b*d);
+    x=(c-b*y)/a;
+}
+
+6.
+/*Dada una fecha en forma de día, mes, año; mediante un procedimiento LITERAL convertirla en su equivalente literal. 
+Por ejemplo: la fecha 20, 5, 99 se debe ser convertida e imprimir ’20 de Mayo de 1999’. La llamada para este caso sería LITERAL(20, 5, 99).*/
+
+#include <iostream>
+
+using namespace std;
+
+int CalcularMes(int m);
+int CalcularAño(int a);
+
+int main()
+{
+    int d,m,a,Mes,Año;
+    
+    cout<<"Ingresar el día: ";
+    cin>>d;
+    cout<<"Ingresar el mes: ";
+    cin>>m;
+    cout<<"Ingresar el año: ";
+    cin>>a;
+
+    cout<<"La fecha escrita es: "<<d<<" de "<<CalcularMes(m)<<" de "<<CalcularAño(a);
+    
+    return 0;
+}
+
+int CalcularMes(int m)
+{
+    switch(m)
+    {
+        case 1 : cout<<"Enero";break;
+        case 2 : cout<<"Febrero";break;
+        case 3 : cout<<"Marzo";break;
+        case 4 : cout<<"Abril";break;
+        case 5 : cout<<"Mayo";break;
+        case 6 : cout<<"Junio";break;
+        case 7 : cout<<"Julio";break;
+        case 8 : cout<<"Agosto";break;
+        case 9 : cout<<"Septiembre";break;
+        case 10 : cout<<"Octubre";break;
+        case 11 : cout<<"Noviembre";break;
+        case 12 : cout<<"Diciembre";break;
+        default : cout<<"Mes establecido erroneo"<<endl;
+    }
+    return m;
+}
+
+int CalcularAño(int a)
+{
+    int TotalA;
+    if ((a>=0)&&(a<=23))
+    {
+        TotalA=2000+a;
+    }
+    else
+    if ((a>=0)&&(a<=99))
+    {
+        TotalA=1900+a;
+    }
+    return TotalA;
+}
+
+7.
+/*	Dado un número combinatorio con parámetros n y r, obtener su valor numérico. Un número combinatorio se define de la siguiente forma:
+
+   n   	      n!
+Combi(n, r) =            =  ----------          donde ‘!’ es la función factorial
+		 	   r	   r! (n-r)!
+
+Construir un programa que utilice una función factorial llamada FAC(n), y luego desde el programa principal la llame de la siguiente forma:
+
+		C = FAC(n) / (FAC(r) * FAC(n-r))*/
+
+#include <iostream>
+
+using namespace std;
+
+// Función para calcular el factorial de un número
+unsigned long long int FAC(int num) 
+{
+    if (num == 0 || num == 1) 
+    {
+        return 1;
+    } 
+    else 
+    {
+        return num * FAC(num - 1);
+    }
+}
+
+// Función para calcular el número combinatorio
+unsigned long long int Combi(int n, int r) 
+{
+    return FAC(n) / (FAC(r) * FAC(n - r));
+}
+
+int main() {
+    int n, r;
+
+    // Solicitar entrada al usuario
+    std::cout << "Ingrese el valor de n: ";
+    std::cin >> n;
+
+    std::cout << "Ingrese el valor de r: ";
+    std::cin >> r;
+
+    // Verificar si r es mayor que n
+    if (r > n) 
+    {
+        cout << "Error: r no puede ser mayor que n." << std::endl;
+        return 1;
+    }
+
+    // Calcular el número combinatorio y mostrar el resultado
+    unsigned long long int C = Combi(n, r);
+    cout << "El número combinatorio C(" << n << ", " << r << ") es: " << C << endl;
+
+    return 0;
+}
+
+8.
+/*Construir un procedimiento para resolver una ecuación cuadrática de la forma ax2 + bx + c = 0, 
+considerando todos los casos; es decir dos raíces reales, dos raíces complejas o una raíz doble.*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float SolUnica(float a, float b, float c);
+void MultipleSol(float a, float b, float c, float &x1,float &x2);
+void SolImaginaria(float a, float b, float c, float &xi,float &xr);
+
+int main()
+{
+    float a,b,c,x1,x2,xi,xr,D,R;
+    
+    cout<<"Introducir la variable a: ";
+    cin>>a;
+    cout<<"Introducir la variable b: ";
+    cin>>b;
+    cout<<"Introducir la variable c: ";
+    cin>>c;
+    
+    D=pow(b,2)-4*a*c;
+    
+    if(D==0)
+    {
+        cout<<"Una raiz: "<<endl;
+        cout<<"x: "<<SolUnica(a,b,c);
+    }
+    else
+    if(D>0)
+    {
+        MultipleSol(a,b,c,x1,x2);
+        
+        cout<<"Dos raices reales: "<<endl;
+        cout<<"X1: "<<x1<<endl;
+        cout<<"X2: "<<x2<<endl;
+    }
+    else
+    if(D<0)
+    {
+        SolImaginaria(a,b,c,xi,xr);
+        cout<<"Dos raices imaginarias: "<<endl;
+        cout<<"X1: "<<xr<<"+"<<xi<<"i"<<endl;
+        cout<<"X2: "<<xr<<"-"<<xi<<"i"<<endl;
+    }
+    
+    return 0;
+}
+
+float SolUnica(float a, float b, float c)
+{
+    float SolU;
+    
+    SolU=-b/(2*a);
+    
+    return SolU;
+}
+
+void MultipleSol(float a, float b, float c, float &x1,float &x2)
+{
+    float D;
+    D=pow(b,2)-4*a*c;
+    
+    x1=(-b+sqrt(D))/(2*a);
+    x2=(-b-sqrt(D))/(2*a);
+}
+
+void SolImaginaria(float a, float b, float c, float &xi,float &xr)
+{
+    float D;
+    D=pow(b,2)-4*a*c;
+    
+    xr=-b/(2*a);
+    xi=((sqrt(-D))/(2*a));
+}
+
+9.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Función para convertir un número binario a decimal
+int binarioADecimal(string numeroBinario) {
+    int longitud = numeroBinario.length();
+    int decimal = 0;
+    int potencia = 1;
+
+    for (int i = longitud - 1; i >= 0; i--) {
+        if (numeroBinario[i] == '1') {
+            decimal += potencia;
+        }
+        potencia *= 2;
+    }
+
+    return decimal;
+}
+
+int main() {
+    string numeroBinario;
+    cout << "Ingrese un número binario: ";
+    cin >> numeroBinario;
+
+    int numeroDecimal = binarioADecimal(numeroBinario);
+
+    cout << "El equivalente decimal de " << numeroBinario << " es: " << numeroDecimal << endl;
+
+    return 0;
+}
+
+
+10.
+/*Construir un procedimiento para convertir un número N en su equivalente en números romanos.*/
+
+#include <iostream>
+using namespace std;
+
+// Procedimiento para convertir un número a su equivalente en números romanos
+void ConvertirARomano(int numero) 
+{
+    if (numero <= 0 || numero > 3999) 
+    {
+        cout << "Error: El número debe estar en el rango de 1 a 3999." << endl;
+        return;
+    }
+    const int valores[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+    const string simbolos[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+
+    cout << "El número romano equivalente es: ";
+
+    for (int i = 0; i < 13; ++i) 
+    {
+        while (numero >= valores[i]) 
+        {
+            cout << simbolos[i];
+            numero = numero - valores[i];
+        }
+    }
+
+    cout << endl;
+}
+
+int main() {
+    int numero;
+    
+    cout << "Ingrese un número (1-3999): ";
+    cin >> numero;
+    
+    ConvertirARomano(numero);
+    return 0;
+}
+
+11.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Función para convertir un número real en su equivalente literal
+string numeroLiteral(double numeroReal) {
+    const string unidades[] = {"cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+    const string decenas[] = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+    const string especiales[] = {"diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"};
+
+    int parteEntera = static_cast<int>(numeroReal);
+    int parteDecimal = static_cast<int>((numeroReal - parteEntera) * 100);
+
+    string resultado = "";
+
+    // Procesar la parte entera
+    if (parteEntera > 0) {
+        if (parteEntera >= 1000) {
+            resultado += unidades[parteEntera / 1000] + " mil ";
+            parteEntera %= 1000;
+        }
+
+        if (parteEntera >= 100) {
+            resultado += unidades[parteEntera / 100] + " cien ";
+            parteEntera %= 100;
+        } else if (parteEntera >= 20) {
+            resultado += decenas[parteEntera / 10] + " ";
+            parteEntera %= 10;
+            if (parteEntera > 0) {
+                resultado += "y ";
+            }
+        } else if (parteEntera >= 10) {
+            resultado += especiales[parteEntera - 10] + " ";
+            parteEntera = 0;
+        }
+
+        if (parteEntera > 0) {
+            resultado += unidades[parteEntera] + " ";
+        }
+    } else {
+        resultado = "cero ";
+    }
+
+    // Procesar la parte decimal
+    if (parteDecimal > 0) {
+        resultado += "con " + unidades[parteDecimal / 10] + " coma " + unidades[parteDecimal % 10];
+    }
+
+    return resultado;
+}
+
+int main() {
+    double numeroReal;
+    cout << "Ingrese un número real de hasta cuatro cifras con dos decimales: ";
+    cin >> numeroReal;
+
+    if (numeroReal < 0 || numeroReal > 9999.99) {
+        cout << "Número fuera de rango." << endl;
+    } else {
+        string literal = numeroLiteral(numeroReal);
+        cout << "El equivalente literal es: " << literal << endl;
+    }
+
+    return 0;
+}
+
+12.
+/*Construir una función para validar una fecha dada en día, mes y año.*/
+
+#include <iostream>
+
+using namespace std;
+
+bool esBisiesto(int year) 
+{
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+bool esFechaValida(int dia, int mes, int anio) 
+{
+    if (anio < 0 || mes < 1 || mes > 12 || dia < 1) 
+    {
+        return false;  // Año negativo, mes fuera de rango o día negativo no son válidos
+    }
+
+    int diasEnMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Ajustar febrero si es bisiesto
+    if (mes == 2 && esBisiesto(anio)) 
+    {
+        diasEnMes[2] = 29;
+    }
+
+    return dia <= diasEnMes[mes];
+}
+
+int main() 
+{
+    int dia, mes, anio;
+
+    // Solicitar la fecha al usuario
+    cout << "Ingrese el día: ";
+    cin >> dia;
+
+    cout << "Ingrese el mes: ";
+    cin >> mes;
+
+    cout << "Ingrese el año: ";
+    cin >> anio;
+
+    // Validar la fecha
+    if (esFechaValida(dia, mes, anio)) 
+    {
+        cout << "La fecha es válida." << endl;
+    } else 
+    {
+        cout << "La fecha no es válida." << endl;
+    }
+
+    return 0;
+}
+
+13.
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float redondearDecimales(float numero, int n);
+
+int main() {
+    double numero;
+    int n; // Cambia esto al número de decimales que desees
+    
+    cout<<"Ingresar el numero: ";
+    cin>>numero;
+    cout<<"Ingresar la cantidad de decimales que desees: ";
+    cin>>n;
+
+    double numeroRedondeado = redondearDecimales(numero, n);
+
+    cout << "Número original: " << numero << endl;
+    cout << "Número redondeado a " << n << " decimales: " << numeroRedondeado << endl;
+
+    return 0;
+}
+
+float redondearDecimales(float numero, int n)
+{
+    float factor = pow(10, n);
+    return round(numero * factor) / factor;
+}
+
+14.
+#include <iostream>
+
+using namespace std;
+
+struct Fecha;
+
+int diasEnMes(int mes); 
+
+int main() 
+{
+    int dia1, mes1, anio1;
+    int dia2, mes2, anio2;
+
+    cout << "Ingrese la primera fecha:" << endl;
+    cout << "Día: ";
+    cin >> dia1;
+    cout << "Mes: ";
+    cin >> mes1;
+    cout << "Año: ";
+    cin >> anio1;
+
+    cout << "Ingrese la segunda fecha:" << endl;
+    cout << "Día: ";
+    cin >> dia2;
+    cout << "Mes: ";
+    cin >> mes2;
+    cout << "Año: ";
+    cin >> anio2;
+
+    int totalDias1 = dia1;
+    int totalDias2 = dia2;
+    for (int m = 1; m < mes1; m++) 
+    {
+        totalDias1 += diasEnMes(m);
+    }
+    for (int m = 1; m < mes2; m++) 
+    {
+        totalDias2 += diasEnMes(m);
+    }
+
+    int diferencia = abs(totalDias1 - totalDias2);
+
+    cout << "Días transcurridos entre las fechas: " << diferencia << " días" << endl;
+    
+    return 0;
+}
+
+struct Fecha 
+{
+    int dia;
+    int mes;
+    int anio;
+};
+
+int diasEnMes(int mes)
+{
+    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    return diasPorMes[mes];
+}
