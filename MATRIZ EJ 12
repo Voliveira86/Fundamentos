@@ -1,0 +1,85 @@
+#include <iostream>
+
+using namespace std;
+
+// Definición de tipo para mayor claridad
+using Cadena = string;
+
+// Función para cargar la matriz
+void cargarMatriz(int n, const Cadena& A, const Cadena& B, const Cadena& C, Cadena matriz[][3]); 
+
+// Función para imprimir la matriz
+void imprimirMatriz(int n, Cadena matriz[][3]);
+
+int main() {
+    int n;
+    Cadena A, B, C;
+
+    // Solicitar los valores de A, B y C
+    cout << "Ingrese el valor de A: ";
+    cin >> A;
+
+    cout << "Ingrese el valor de B: ";
+    cin >> B;
+
+    cout << "Ingrese el valor de C: ";
+    cin >> C;
+
+    // Solicitar el valor de n
+    cout << "Ingrese el valor de n: ";
+    cin >> n;
+
+    // Verificar que n sea válido
+    if (n <= 0) {
+        cerr << "Error: El valor de n debe ser mayor que 0." << endl;
+        return 1;
+    }
+
+    // Matriz resultante
+    Cadena matrizResultante[n][3];
+
+    // Llamar a la función para cargar la matriz
+    cargarMatriz(n, A, B, C, matrizResultante);
+
+    // Imprimir la matriz resultante
+    imprimirMatriz(n, matrizResultante);
+
+    return 0;
+}
+
+void cargarMatriz(int n, const Cadena& A, const Cadena& B, const Cadena& C, Cadena matriz[][3]) {
+    // Verificar que n sea válido
+    if (n <= 0) {
+        cerr << "Error: El valor de n debe ser mayor que 0." << endl;
+        return;
+    }
+
+    // Llenar la matriz con los elementos de acuerdo a las reglas
+    for (int i = 0; i < n; ++i) {
+        if (i == 0) {
+            // Primera fila
+            for (int j = 0; j < n; ++j) {
+                matriz[i][j] = A;
+            }
+        } else if (i == 1) {
+            // Segunda fila
+            for (int j = 0; j < n; ++j) {
+                matriz[i][j] = B;
+            }
+        } else {
+            // Tercera fila
+            for (int j = 0; j < n; ++j) {
+                matriz[i][j] = C;
+            }
+        }
+    }
+}
+
+void imprimirMatriz(int n, Cadena matriz[][3]) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
