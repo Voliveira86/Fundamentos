@@ -1,0 +1,335 @@
+#include <iostream>
+#include <string>//admite caracteres
+#include <fstream>//se encarga meter datos y pedir datos lee ,y escribe elementos en el archivo
+#include <sstream>//lo mismo solo con string (caracteres)
+
+#define MAX_REPARADORES 100 // Máximo número de reparadores
+#define NUM_SERVICIOS 5   // Número de servicios disponibles
+
+using namespace std;
+
+struct Reparador {//organizar y agrupar datos bajo un nombre
+    int servicios[NUM_SERVICIOS];
+};
+
+Reparador perfiles[MAX_REPARADORES];
+
+class Usuario {//lo que hace esta clase es para poder meter usuario y contraseña 
+private://privado es lo que le pedimos al usuario informacion confidencial 
+    string nombre;
+    string contrasenia;
+    string tipo;
+
+public://verificar 
+    Usuario(const string& n, const string& c, const string& t)//const no se cambia  n nombre c contraseña t tipo 
+        : nombre(n), contrasenia(c), tipo(t) {}
+
+    // bool = cuando se quiere verdadero o falso 
+    //compara lo que escribe el usuario si tiene lo mismo que el programa entra 
+    //devuelve comparacion de nombre y usuario , devuelve falso o verdadero
+    bool verificarLogin(const string& usuario, const string& contrasenia) const {
+        return (this->nombre == usuario && this->contrasenia == contrasenia); 
+    }
+
+    //que tipo de usuario es y lo manda a los diferentes menu 
+    string getTipo() const {
+        return tipo;
+    }
+};
+//SERVICIOS[NUM_SERVICIOS] vector servicios 
+const string SERVICIOS[NUM_SERVICIOS] = { "Electrodomesticos", "Muebles", "Tuberia", "Electricos", "Pintura" };
+
+void cargarReparadores();
+void guardarReparadores();
+void registrarReparador();
+void mostrarReparadores();
+void registrarCliente();
+void menuCliente(const Usuario& usuario);
+void menuReparador(const Usuario& usuario);
+void menuAdministrador();
+void servicios();
+void mostrarReparadoresSegunOpcion(int opcion);
+
+int main() {
+    cargarReparadores();
+    int opcion;
+    string usuario, contrasenia, tipo, nombre, apellido;
+    //menu 
+    cout << "1. log in" << endl;
+    cout << "2. sing in" << endl;
+    cout << "Ingresar opcion: ";
+    cin >> opcion;
+    switch (opcion) {
+    case 1:
+        cout << "Ingresar usuario: ";
+        cin >> usuario;
+        cout << "Ingresar contrasenia: ";
+        cin >> contrasenia;
+        break;
+    case 2:
+        cout << "Nombre (s): ";// lo que importa son usuario y contraseña 
+        cin >> nombre;
+        cout << "Apellidos: ";
+        cin.ignore();
+        getline(cin, apellido);
+        cout << "Crear nombre de usuario: ";
+        cin >> usuario;
+        cout << "crear contrasenia: ";
+        cin >> contrasenia;
+        cout << "Eres reparador o cliente?" << endl;
+        cin >> tipo;
+        break;
+    default:
+        cout << "opcion no valida";
+    }
+
+    //class usuario 
+    Usuario usuarioActual(usuario, contrasenia, tipo);
+
+    // esto se va a lo publico y define que tipo es 
+    if (usuarioActual.verificarLogin(usuario, contrasenia)) {
+        if (tipo == "cliente") {
+            menuCliente(usuarioActual);
+            servicios();
+        }
+        else if (tipo == "reparador") {
+            menuReparador(usuarioActual);
+            registrarReparador();
+            guardarReparadores();
+        }
+        else if (tipo == "administrador") {
+            menuAdministrador();
+        }
+        else {
+            cout << "Tipo de usuario no reconocido.\n";
+        }
+    }
+    else {
+        cout << "Acceso denegado.\n";// si el usuario no esta en login sale esto 
+    }
+
+    return 0;
+}// fin del int main 
+
+void menuCliente(const Usuario& usuario) {
+    int opcion;
+    do {
+        cout << "\nMenú Cliente:\n";
+        cout << "1. Necesito una reparacion\n";
+        cout << "2. Como arreglarlo yo mismo\n";
+        cout << "3. Salir\n";
+        cout << "Ingrese su opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            servicios();
+            break;
+        case 2:
+            // (Lógica para guía de reparaciones)
+            break;
+        case 3:
+            cout << "Saliendo del programa.\n";
+            break;
+        default:
+            cout << "Opción no válida. Intente de nuevo.\n";
+            break;
+        }
+    } while (opcion != 3);
+}
+
+void menuReparador(const Usuario& usuario) {
+    int opcion;
+    do {
+        cout << "\nMenú Reparador:\n";
+        cout << "1. Ver solicitudes de reparacion\n";
+        cout << "2. Registrar perfil de reparaciones\n";
+        cout << "3. Salir\n";
+        cout << "Ingrese su opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // (Mostrar lista de solicitudes de reparaciones)
+            break;
+        case 2:
+            registrarReparador();
+            break;
+        case 3:
+            cout << "Saliendo del programa.\n";
+            break;
+        default:
+            cout << "Opción no válida. Intente de nuevo.\n";
+            break;
+        }
+    } while (opcion != 3);
+}
+
+void menuAdministrador() {
+    int opcion;
+    do {
+        cout << "\nMenú Administrador:\n";
+        cout << "1. Solicitar ingresos\n";
+        cout << "2. Administrar\n";
+        cout << "3. Salir\n";
+        cout << "Ingrese su opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            // (Lógica para mostrar ingresos)
+            break;
+        case 2:
+            mostrarReparadores();
+            break;
+        case 3:
+            cout << "Saliendo del programa.\n";
+            break;
+        default:
+            cout << "Opción no válida. Intente de nuevo.\n";
+            break;
+        }
+    } while (opcion != 3);
+}
+
+
+// tres funciones para guradar los reparadores en los archivos y salida de archivos
+
+void cargarReparadores() {//Entrada del archivo
+    ifstream archivo("reparadores.txt");
+    if (archivo.is_open()) {
+        for (int i = 0; i < MAX_REPARADORES; ++i) {
+            for (int j = 0; j < NUM_SERVICIOS; ++j) {
+                archivo >> perfiles[i].servicios[j];
+            }
+        }
+        archivo.close();
+    }
+    else {
+        cout << "No se pudo abrir el archivo." << endl;
+    }
+}
+
+ 
+void guardarReparadores() { //Salida del arcivo
+    ofstream archivo("reparadores.txt");//reparadores.txt nombre del archivo 
+    if (archivo.is_open()) {//si  archivo abierto pasa todo esto 
+        for (int i = 0; i < MAX_REPARADORES; ++i) {//empieza de 0 a 100 de 1 en 1 , va llenando los reparadores en la matriz de servicios 
+            for (int j = 0; j < NUM_SERVICIOS; ++j) {// de 0 a 5 numeros de servicios 
+                archivo << perfiles[i].servicios[j] << " ";
+            }
+            archivo << endl;
+        }
+        archivo.close();//cierra archivo 
+    }
+    else {
+        cout << "No se pudo abrir el archivo." << endl;//si no se abre sale esto 
+    }
+}
+void registrarReparador() {//Registra los servicios de cada reparador 
+    if (perfiles[MAX_REPARADORES - 1].servicios[0] != -1) {
+        cout << "Se ha alcanzado el máximo número de reparadores." << endl;
+        return;
+    }
+    cout << "Ingrese los servicios que ofrece el reparador (0 - no ofrece, 1 - ofrece):" << endl;
+    cout << "Electrodomesticos Muebles Tuberia Electricos Pintura" << endl;
+
+    Reparador reparador;//Lo guarda en el struct reparado
+
+    for (int i = 0; i < NUM_SERVICIOS; ++i) {//rellena el vector servicios
+        int ofreceServicio;
+        cin >> ofreceServicio;
+        if (ofreceServicio != 0 && ofreceServicio != 1) {// si ingresa diferente de 0 o 1 vuelve a pedir que llene con 0 y 1 
+            cout << "Ingrese 0 o 1 para indicar si ofrece el servicio." << endl;
+            return;
+        }
+        reparador.servicios[i] = ofreceServicio;//guarde en el vector 
+    }
+
+    for (int i = 0; i < MAX_REPARADORES; ++i) {// se fija si se llena o no y lo guarda 
+        if (perfiles[i].servicios[0] == -1) {
+            perfiles[i] = reparador;
+            cout << "Reparador registrado correctamente." << endl;
+            break;
+        }
+    }
+}
+
+void mostrarReparadores() { //muestra la matriz reparadores x servicios
+    if (perfiles[0].servicios[0] == -1) {// si hay elemntos registrados o no en la matriz matriz es perfiles x servicios 
+        cout << "No hay reparadores registrados." << endl;//si la matriz esta vacia muestra ese mensaje 
+        return;
+    }
+    
+    // si no cumple salta a lo de abajo 
+    cout << "Lista de reparadores y sus servicios:" << endl;
+    int codigo = 1;//orden de como se registran los reparadores 
+    for (int i = 0; i < MAX_REPARADORES; ++i) {// se mueve en los reparadores 
+        if (perfiles[i].servicios[0] != -1) {//se fija en la matriz los que cumplen y los seleccionan 
+            cout << "Reparador " << codigo << " (Codigo: " << codigo << ")" << endl;
+            for (int j = 0; j < NUM_SERVICIOS; ++j) {//se fija en el vector de los servicios si tiene 1 sale ofrece y si no tiene muestra no ofrece
+                cout << SERVICIOS[j] << ": ";
+                if (perfiles[i].servicios[j] == 1) { //matriz perfiles x servicios 
+                    cout << "Ofrece" << endl;
+                }
+                else {
+                    cout << "No ofrece" << endl;
+                }
+            }
+            cout << endl;
+            codigo++;
+        }
+    }
+}
+
+void mostrarReparadoresSegunOpcion(int opcion) {
+    if (perfiles[0].servicios[0] == -1) {// si la matriz esta vacia se dirige al sgte 
+        cout << "No hay reparadores registrados." << endl;
+        return;
+    }
+
+    string servicios[NUM_SERVICIOS] = { "Electrodomesticos", "Muebles", "Tuberias", "Electricos", "Pintores" };//verifica que la opcion 1 a 5  
+    if (opcion < 1 || opcion > NUM_SERVICIOS) {
+        cout << "Opción no válida." << endl;
+        return;
+    }
+
+    string servicioSeleccionado = servicios[opcion - 1];//para encontrar el elemento del vector por que dicha empieza en 0 
+    cout << "Reparadores para " << servicioSeleccionado << ":" << endl;
+    int codigo = 1;
+    bool encontrado = false;
+
+    for (int i = 0; i < MAX_REPARADORES; ++i) {// ve el vector de reparadores 
+        if (perfiles[i].servicios[opcion - 1] == 1) {//si cumple va a mostrar lo sgt 
+            cout << "Reparador " << codigo << " (Codigo: " << codigo << ") - Usuario: " << i + 1 << endl;
+            ++codigo;
+            encontrado = true;//si cumple es verdadero 
+        }
+    }
+
+    if (!encontrado) {
+        cout << "No hay reparadores que ofrezcan este servicio." << endl;//si no encuentra 
+    }
+}
+
+void servicios() {// no se necesita swich por que se va directo a encontrar reparadores 
+    int opcion;
+    do {
+        cout << "SELECCIONE LO QUE GUSTARIA REALIZAR  " << endl;
+        cout << "1.- ELECTRODOMESTICOS " << endl;
+        cout << "2.- MUEBLES " << endl;
+        cout << "3.- TUBERIAS " << endl;
+        cout << "4.- ELECTRICOS " << endl;
+        cout << "5.- PINTORES " << endl;
+        cout << "0.- SALIR " << endl;
+        cout << "Seleccionar una opcion: ";
+        cin >> opcion;
+        system("cls");
+
+        cout << "Muchas gracias por elegir esta opcion." << endl;
+        cout << "Te dejo a los expertos: " << endl;
+
+        mostrarReparadoresSegunOpcion(opcion);
+
+    } while (opcion != 0);
+}
